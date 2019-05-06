@@ -7,6 +7,8 @@
 //
 
 #include "Node.h"
+#include "Camera.h"
+#include "../base/Director.h"
 
 float blendOffset = 0.2;
 
@@ -159,28 +161,21 @@ void Node::draw()
     //    glBindTexture(GL_TEXTURE_2D, texture2->getTextureID());
     
     m_shaderProgram->useProgram();
-    float timeValue = glfwGetTime();
+//    float timeValue = glfwGetTime();
     //        float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
     //        shaderProgram->setUniform4f("ourColor", 0.0f, greenValue, 0.0f, 0.0f);
 //    m_shaderProgram->setUniform1f("ourPosition", sin(timeValue)*0.5);
-    m_shaderProgram->setUniform1f("blendOffset", blendOffset);
+//    m_shaderProgram->setUniform1f("blendOffset", blendOffset);
     
-    glm::mat4 transform = glm::mat4(1.0f);
-//    transform = glm::translate(transform, glm::vec3(0.0f, -0.0f, -3.2f));
-//    transform = glm::rotate(transform, timeValue, glm::vec3(0.0f, 0.0f, 1.0f));
-    transform = glm::translate(transform, glm::vec3(m_fPosition.x, m_fPosition.y, m_fPosition.z));
-//    transform = glm::scale(transform, glm::vec3(0.8));
+    glm::mat4 projection = Director::getInstance()->getMainCamera()->getProjection();
     
-    glm::mat4 projection = glm::mat4(1.0f);
-    projection = glm::perspective(glm::radians(45.0f), 500.0f / 500.0f, 0.1f, 100.0f);
+    glm::mat4 view = Director::getInstance()->getMainCamera()->getViewVector();
     
-    glm::mat4 view = glm::mat4(1.0f);
-//    view = glm::translate(view, glm::vec3(0.0f, -timeValue, -timeValue));
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(m_fPosition.x, m_fPosition.y, m_fPosition.z));
+//    model = glm::rotate(model, timeValue, glm::vec3(1.0f, 1.0f, 0.0f));
+//    model = glm::scale(model, timeValue, glm::vec3(1.0f, 1.0f, 0.0f));
     
-    glm::mat4 model = glm::mat4(1.0f);;
-    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    
-    m_shaderProgram->setUniformMat4f("transform", transform);
     m_shaderProgram->setUniformMat4f("projection", projection);
     m_shaderProgram->setUniformMat4f("view", view);
     m_shaderProgram->setUniformMat4f("model", model);
