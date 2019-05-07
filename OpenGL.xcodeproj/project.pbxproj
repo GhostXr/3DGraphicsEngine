@@ -16,6 +16,7 @@
 		5BAEA44921369C3B0055552D /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BAEA44821369C3B0055552D /* libGLEW.2.1.0.dylib */; };
 		5BAEA44B21369C8F0055552D /* glad.c in Sources */ = {isa = PBXBuildFile; fileRef = 5BAEA44A21369C8F0055552D /* glad.c */; };
 		5BB7B925219C4A2D006152AA /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB7B924219C4A2D006152AA /* OpenCL.framework */; };
+		5BCB359C22818FE70012F217 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BF79B4F228126D0008BC9A6 /* Light.cpp */; };
 		5BE480612179843000252926 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BE4805F2179843000252926 /* Node.cpp */; };
 		5BF79B44228023BF008BC9A6 /* Director.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BF79B42228023BF008BC9A6 /* Director.cpp */; };
 		5BF79B47228023E2008BC9A6 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BF79B45228023E2008BC9A6 /* Camera.cpp */; };
@@ -58,6 +59,10 @@
 		5BF79B43228023BF008BC9A6 /* Director.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Director.h; sourceTree = "<group>"; };
 		5BF79B45228023E2008BC9A6 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		5BF79B46228023E2008BC9A6 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
+		5BF79B4C22808C8C008BC9A6 /* LightShader_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightShader_vert.h; sourceTree = "<group>"; };
+		5BF79B4D22808CB0008BC9A6 /* LightShader_frag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightShader_frag.h; sourceTree = "<group>"; };
+		5BF79B4F228126D0008BC9A6 /* Light.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Light.cpp; sourceTree = "<group>"; };
+		5BF79B50228126D0008BC9A6 /* Light.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Light.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,9 +97,11 @@
 		5B7831DD214E961100B84F4E /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				5BF79B4C22808C8C008BC9A6 /* LightShader_vert.h */,
 				5B383B1821590E1E00BC5325 /* PositionShader_frag.h */,
 				5B7831DE214E966C00B84F4E /* PositionShader_vert.h */,
 				5B2083A22169B63B00E80086 /* TransformShader_vert.h */,
+				5BF79B4D22808CB0008BC9A6 /* LightShader_frag.h */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -131,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				5B9B2A8A21686C69005C62F2 /* res */,
+				5BF79B4E228126D0008BC9A6 /* engine */,
 				5BF79B41228023BF008BC9A6 /* base */,
 				5B9B2A8921686A6B005C62F2 /* external */,
 				5B383B142158985700BC5325 /* render */,
@@ -158,6 +166,15 @@
 				5BF79B43228023BF008BC9A6 /* Director.h */,
 			);
 			path = base;
+			sourceTree = "<group>";
+		};
+		5BF79B4E228126D0008BC9A6 /* engine */ = {
+			isa = PBXGroup;
+			children = (
+				5BF79B4F228126D0008BC9A6 /* Light.cpp */,
+				5BF79B50228126D0008BC9A6 /* Light.hpp */,
+			);
+			path = engine;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,6 +233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BCB359C22818FE70012F217 /* Light.cpp in Sources */,
 				5B20839F2168C1D300E80086 /* Texture.cpp in Sources */,
 				5BF79B44228023BF008BC9A6 /* Director.cpp in Sources */,
 				5BAEA43A213696CD0055552D /* main.cpp in Sources */,

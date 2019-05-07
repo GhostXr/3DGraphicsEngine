@@ -20,14 +20,18 @@ Node::Node()
 , m_Texture(NULL)
 , m_hasAlpha(false)
 , m_fPosition(0.0f)
+, m_color(glm::vec4(1.0))
 {
-    
+    m_shaderProgram = GLShaderProgram::createShaderProgram(NORMAL_SHADER);
 }
 
 Node::~Node()
 {
-    delete m_Texture;
-    delete m_shaderProgram;
+    if(m_Texture)
+        delete m_Texture;
+    
+    if(m_shaderProgram)
+        delete m_shaderProgram;
     
     for(int i= 0; i < m_vChildrenList.size();i++)
         delete m_vChildrenList[i];
@@ -70,12 +74,13 @@ void Node::initTexture(const char* fileName)
     }
 }
 
-void Node::setShaderProgram(const char* vertShaderName, const char* fragShaderName)
+void Node::setShaderProgram(SHADE_PROGRAM shader)
 {
-    if(m_shaderProgram == NULL)
+    if(m_shaderProgram != NULL)
     {
-        m_shaderProgram = GLShaderProgram::createShaderProgram(vertShaderName, fragShaderName);
+        delete m_shaderProgram;
     }
+    m_shaderProgram = GLShaderProgram::createShaderProgram(shader);
 }
 
 void Node::blendBuff()
@@ -180,6 +185,10 @@ void Node::draw()
     m_shaderProgram->setUniformMat4f("view", view);
     m_shaderProgram->setUniformMat4f("model", model);
 
+    glm::vec3 lightColor = Director::getInstance()->getLight()->getLightColor();
+    m_shaderProgram->setUniform3f("lightColor", lightColor.r, lightColor.g, lightColor.b);
+    
+    m_shaderProgram->setUniform4f("objectColor", m_color.r, m_color.g, m_color.b, m_color.a);
     
     glBindVertexArray(m_VAO);
     //        glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -228,4 +237,9 @@ void Node::setPosition(float x, float y, float z)
     m_fPosition.x = x;
     m_fPosition.y = y;
     m_fPosition.z = z;
+}
+
+void Node::setColor(glm::vec4 color)
+{
+    m_color = color;
 }

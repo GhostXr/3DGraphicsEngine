@@ -31,7 +31,7 @@ public:
     
     void initTexture(const char* fileName);
     
-    void setShaderProgram(const char* vertShaderName, const char* fragShaderName);
+    void setShaderProgram(SHADE_PROGRAM shader);
     
     void visit();
     
@@ -46,6 +46,8 @@ public:
     void removeParentNode();
     
     void setPosition(float x, float y, float z);
+    
+    void setColor(glm::vec4 color);
     
     void blendBuff();
     
@@ -65,6 +67,8 @@ private:
     unsigned int m_EBO;
     
     glm::vec3 m_fPosition;
+    
+    glm::vec4 m_color;
 };
 
 #endif /* Node_h */

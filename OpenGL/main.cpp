@@ -12,6 +12,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "base/Director.h"
+#include "render/GLShaderProgram.h"
 
 unsigned int screenWidth = 500;
 unsigned int screenHeight = 500;
@@ -103,17 +104,19 @@ int main(int argc, const char * argv[]) {
     Node* rootNode = Director::getInstance()->getRootNode();
     
     Node* node1 = Node::createNode();
-    node1->setShaderProgram("shaders/TransformShader_vert.h", "shaders/PositionShader_frag.h");
+    node1->setShaderProgram(TRANSFORM_SHADER);
     node1->blendBuff();
     node1->initTexture("res/textures/wall.jpg");
     node1->setPosition(0, 0, -0);
+    node1->setColor(glm::vec4(0.0, 0.5, 0.0, 1.0));
     rootNode->addChild(node1);
 
     Node* node2 = Node::createNode();
-    node2->setShaderProgram("shaders/TransformShader_vert.h", "shaders/PositionShader_frag.h");
+    node2->setShaderProgram(LIGHT_SHADER);
     node2->blendBuff();
     node2->initTexture("res/textures/wall.jpg");
-    node2->setPosition(0, -1, -1);
+    node2->setPosition(0, -4, -5);
+    node2->setColor(glm::vec4(0.3, 0.5, 0.2, 1.0));
     rootNode->addChild(node2);
 
     mainLoop(window);

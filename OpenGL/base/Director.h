@@ -13,6 +13,7 @@
 
 #include "../render/Node.h"
 #include "../render/Camera.h"
+#include "../engine/Light.hpp"
 
 class Director
 {
@@ -33,10 +34,15 @@ public:
     Node* getRootNode();
     
     Camera* getMainCamera();
+    
+    Light* getLight();
+    
 private:
     Node* m_rootNode;
     
     Camera* m_mainCamera;
+    
+    Light* m_light;
     
     float m_pitchAngle;
     float m_yawAngle;

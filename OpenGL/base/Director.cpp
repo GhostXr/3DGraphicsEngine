@@ -32,6 +32,17 @@ Director::Director()
     m_mainCamera = new Camera();
 
     lastFrame = glfwGetTime();
+    
+    m_light = Light::createLight();
+    m_light->setLightColor(glm::vec3(1.0, 0.0, 0.0));
+}
+
+Director::~Director()
+{
+    delete m_rootNode;
+    delete m_light;
+    if(m_mainCamera)
+        delete m_mainCamera;
 }
 
 Node* Director::getRootNode()
@@ -132,4 +143,9 @@ void Director::listenerScrollEvent(float offsetX, float offsetY)
 Camera* Director::getMainCamera()
 {
     return m_mainCamera;
+}
+
+Light* Director::getLight()
+{
+    return m_light;
 }

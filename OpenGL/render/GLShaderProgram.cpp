@@ -20,17 +20,33 @@ GLShaderProgram::~GLShaderProgram()
     m_program = NULL;
 }
 
-GLShaderProgram* GLShaderProgram::createShaderProgram(const GLchar* vertPath, const GLchar* fragPath)
+GLShaderProgram* GLShaderProgram::createShaderProgram(SHADE_PROGRAM shader)
 {
     GLShaderProgram* program = new GLShaderProgram();
     if(program)
     {
-        program->initShaderProgram(vertPath, fragPath);
+        program->initShaderProgram(shader);
     }
     return program;
 }
 
-void GLShaderProgram::initShaderProgram(const GLchar* vertPath, const GLchar* fragPath)
+void GLShaderProgram::initShaderProgram(SHADE_PROGRAM shader)
+{
+    if(shader == TRANSFORM_SHADER)
+    {
+        this->loadShaderProgram("shaders/TransformShader_vert.h", "shaders/PositionShader_frag.h");
+    }
+    if(shader == LIGHT_SHADER)
+    {
+        this->loadShaderProgram("shaders/LightShader_vert.h", "shaders/LightShader_frag.h");
+    }
+    if(shader == NORMAL_SHADER)
+    {
+        this->loadShaderProgram("shaders/PositionShader_vert.h", "shaders/PositionShader_frag.h");
+    }
+}
+
+void GLShaderProgram::loadShaderProgram(const GLchar* vertPath, const GLchar* fragPath)
 {
     string vertexShaderStr, fragShaderStr;
     loadShader(vertPath, vertexShaderStr);
@@ -103,30 +119,36 @@ void GLShaderProgram::useProgram()
 
 void GLShaderProgram::setUniform1i(const string &name, int value)
 {
-    int vertexColorLocation = glGetUniformLocation(m_program, name.c_str());
-    glUniform1i(vertexColorLocation, value);
+    int location = glGetUniformLocation(m_program, name.c_str());
+    glUniform1i(location, value);
 }
 
 void GLShaderProgram::setUniform1f(const string &name, float value)
 {
-    int vertexColorLocation = glGetUniformLocation(m_program, name.c_str());
-    glUniform1f(vertexColorLocation, value);
+    int location = glGetUniformLocation(m_program, name.c_str());
+    glUniform1f(location, value);
 }
 
 void GLShaderProgram::setUniform4f(const string &name, float value1, float value2, float value3, float value4)
 {
-    int vertexColorLocation = glGetUniformLocation(m_program, name.c_str());
-    glUniform4f(vertexColorLocation, value1, value2, value3, value4);
+    int location = glGetUniformLocation(m_program, name.c_str());
+    glUniform4f(location, value1, value2, value3, value4);
+}
+
+void GLShaderProgram::setUniform3f(const string &name, float value1, float value2, float value3)
+{
+    int location = glGetUniformLocation(m_program, name.c_str());
+    glUniform3f(location, value1, value2, value3);
 }
 
 void GLShaderProgram::setUniformBool(const string &name, bool value)
 {
-    int vertexColorLocation = glGetUniformLocation(m_program, name.c_str());
-    glUniform1i(vertexColorLocation, (int)value);
+    int location = glGetUniformLocation(m_program, name.c_str());
+    glUniform1i(location, (int)value);
 }
 
 void GLShaderProgram::setUniformMat4f(const string &name, glm::mat4 value)
 {
-    int vertexColorLocation = glGetUniformLocation(m_program, name.c_str());
-    glUniformMatrix4fv(vertexColorLocation, 1, GL_FALSE, glm::value_ptr(value));
+    int location = glGetUniformLocation(m_program, name.c_str());
+    glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
 }
