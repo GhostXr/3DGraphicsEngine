@@ -27,14 +27,19 @@ Director::Director()
 , m_pitchAngle(0)
 , m_yawAngle(-90)
 , m_firstMouse(true)
+, m_light(nullptr)
 {
-    m_rootNode = Node::createNode();
+    m_rootNode = Node::create();
     m_mainCamera = new Camera();
 
     lastFrame = glfwGetTime();
     
-    m_light = Light::createLight();
-    m_light->setLightColor(glm::vec3(1.0, 0.0, 0.0));
+    m_light = Light::create();
+    m_light->setShaderProgram(LIGHT_SHADER);
+    m_light->setLightColor(glm::vec3(0.3, 0.8, 0.1));
+    m_light->setColor(glm::vec4(0.3, 0.8, 0.1, 1.0));
+    m_light->setPosition(0, 2, 3);
+    m_rootNode->addChild(m_light);
 }
 
 Director::~Director()

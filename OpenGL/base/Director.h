@@ -11,8 +11,8 @@
 
 #include <stdio.h>
 
-#include "../render/Node.h"
-#include "../render/Camera.h"
+#include "../engine/Node.h"
+#include "../engine/Camera.h"
 #include "../engine/Light.hpp"
 
 class Director

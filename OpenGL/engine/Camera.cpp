@@ -14,7 +14,7 @@ Camera::Camera()
 , m_cameraPos(glm::vec3(0.0f, 0.0f, 20.0f))
 , m_cameraFront(glm::vec3(0.0f, 0.0f, -1.0f))
 , m_cameraUp(glm::vec3(0.0f, 1.0f, 0.0f))
-, m_cameraSpeed(1.5)
+, m_cameraSpeed(5.5)
 , m_viewVector(glm::mat4(1.0))
 {
     UpdateCameraInfo();
@@ -69,6 +69,8 @@ glm::vec3 Camera::getCameraFront()
 void Camera::setCameraFront(glm::vec3 cameraFront)
 {
     m_cameraFront = cameraFront;
+    
+    UpdateCameraInfo();
 }
 
 glm::vec3 Camera::getCameraUp()

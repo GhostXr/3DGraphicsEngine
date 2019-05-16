@@ -12,7 +12,6 @@
 #include <stdio.h>
 #include <vector>
 
-#include "Texture.h"
 #include "GLShaderProgram.h"
 
 #include <GLFW/glfw3.h>
@@ -25,17 +24,15 @@ public:
     Node();
     ~Node();
     
-    static Node* createNode();
+    static Node* create();
     
-    void init();
+    virtual void init();
     
-    void initTexture(const char* fileName);
+    virtual void visit();
+    
+    virtual void draw();
     
     void setShaderProgram(SHADE_PROGRAM shader);
-    
-    void visit();
-    
-    void draw();
 
     void addChild(Node* node);
     
@@ -47,13 +44,13 @@ public:
     
     void setPosition(float x, float y, float z);
     
+    glm::vec3 getPosition();
+    
     void setColor(glm::vec4 color);
     
-    void blendBuff();
+    void setScale(const float x, const float y, const float z);
     
-private:
-    Texture* m_Texture;
-    
+public:
     bool m_hasAlpha;
     
     GLShaderProgram* m_shaderProgram;
@@ -62,13 +59,11 @@ private:
     
     Node* m_nParentNode;
     
-    unsigned int m_VAO;
-    unsigned int m_VBO;
-    unsigned int m_EBO;
-    
     glm::vec3 m_fPosition;
     
     glm::vec4 m_color;
+    
+    glm::vec3 m_scale;
 };
 
 #endif /* Node_h */

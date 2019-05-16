@@ -3,15 +3,15 @@ out vec4 FragColor;
 
 in vec3 position;
 in vec2 texCoord;
-in vec3 ourColor;
+in vec3 color;
 
 uniform sampler2D texture1;
-uniform sampler2D texture2;
-uniform float blendOffset;
+uniform vec3 lightColor;
+uniform vec4 objectColor;
 
 void main()
 {
-    vec4 texColor1 = texture(texture1, texCoord);
-    vec4 texColor2 = texture(texture2, vec2(-texCoord.x, texCoord.y));
-    FragColor = mix(texColor1, texColor2, blendOffset) * vec4(ourColor, 1.0);
+    vec4 texColor = texture(texture1, texCoord);
+    vec4 result = vec4(lightColor, 1.0) * objectColor;
+    FragColor = texColor * vec4(color, 1.0) * result;
 }

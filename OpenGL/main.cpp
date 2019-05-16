@@ -13,6 +13,7 @@
 
 #include "base/Director.h"
 #include "render/GLShaderProgram.h"
+#include "engine/Cube.hpp"
 
 unsigned int screenWidth = 500;
 unsigned int screenHeight = 500;
@@ -103,24 +104,22 @@ int main(int argc, const char * argv[]) {
     
     Node* rootNode = Director::getInstance()->getRootNode();
     
-    Node* node1 = Node::createNode();
-    node1->setShaderProgram(TRANSFORM_SHADER);
-    node1->blendBuff();
-    node1->initTexture("res/textures/wall.jpg");
-    node1->setPosition(0, 0, -0);
-    node1->setColor(glm::vec4(0.0, 0.5, 0.0, 1.0));
-    rootNode->addChild(node1);
+    Cube* cube1 = Cube::create();
+    rootNode->addChild(cube1);
+    cube1->setShaderProgram(BASIC_LIGHTING_SHADER);
+    cube1->setTexture("res/textures/wall.jpg");
+    cube1->setPosition(0, 0, -0);
+    cube1->setColor(glm::vec4(0.9, 0.9, 0.9, 1.0));
+    cube1->setScale(1.5, 1.5, 1.5);
 
-    Node* node2 = Node::createNode();
-    node2->setShaderProgram(LIGHT_SHADER);
-    node2->blendBuff();
-    node2->initTexture("res/textures/wall.jpg");
-    node2->setPosition(0, -4, -5);
-    node2->setColor(glm::vec4(0.3, 0.5, 0.2, 1.0));
-    rootNode->addChild(node2);
+//    Cube* cube2 = Cube::create();
+//    cube2->setShaderProgram(BASIC_LIGHTING_SHADER);
+////    cube2->setTexture("res/textures/wall.jpg");
+//    cube2->setPosition(0, -4, -5);
+//    cube2->setColor(glm::vec4(0.3, 0.5, 0.2, 1.0));
+//    rootNode->addChild(cube2);
 
     mainLoop(window);
-    
     
     glfwTerminate();
     

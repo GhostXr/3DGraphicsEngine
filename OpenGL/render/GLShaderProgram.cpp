@@ -44,6 +44,10 @@ void GLShaderProgram::initShaderProgram(SHADE_PROGRAM shader)
     {
         this->loadShaderProgram("shaders/PositionShader_vert.h", "shaders/PositionShader_frag.h");
     }
+    if(shader == BASIC_LIGHTING_SHADER)
+    {
+        this->loadShaderProgram("shaders/BasicLighting_shader_vert.h", "shaders/BasicLighting_shader_frag.h");
+    }
 }
 
 void GLShaderProgram::loadShaderProgram(const GLchar* vertPath, const GLchar* fragPath)

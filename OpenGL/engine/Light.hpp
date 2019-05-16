@@ -13,15 +13,20 @@
 
 #include <glm/glm.hpp>
 
-class Light
+#include "Node.h"
+
+class Light : public Node
 {
 public:
-    static Light* createLight();
+    static Light* create();
     
     Light();
     ~Light();
     
-    void init();
+    virtual void init();
+    virtual void visit();
+    virtual void draw();
+    virtual void blendBuff();
     
     void setLightColor(glm::vec3 color);
     
@@ -29,6 +34,10 @@ public:
     
 private:
     glm::vec3 m_lightColor;
+    
+    unsigned int m_VAO;
+    unsigned int m_VBO;
+    unsigned int m_EBO;
 };
 
 #endif /* Light_h */
