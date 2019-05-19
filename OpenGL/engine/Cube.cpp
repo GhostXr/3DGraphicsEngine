@@ -159,8 +159,11 @@ void Cube::draw()
         lightColor = light->getLightColor();
         lightPos = light->getPosition();
     }
-    m_shaderProgram->setUniform3f("lightColor", lightColor.r, lightColor.g, lightColor.b);
-    m_shaderProgram->setUniform3f("lightPos", lightPos.x, lightPos.y, lightPos.b);
+    m_shaderProgram->setUniform3f("light.ambinet", 0.2, 0.2, 0.2);
+    m_shaderProgram->setUniform3f("light.diffuse", 0.5, 0.5, 0.5);
+    m_shaderProgram->setUniform3f("light.specular", 1.0, 1.0, 1.0);
+    m_shaderProgram->setUniform3f("light.position", lightPos.x, lightPos.y, lightPos.z);
+
     
     glm::vec3 cameraPos = glm::vec3(0);
     Camera* camera = Director::getInstance()->getMainCamera();
@@ -172,6 +175,10 @@ void Cube::draw()
     
     m_shaderProgram->setUniform4f("objectColor", m_color.r, m_color.g, m_color.b, m_color.a);
     
+    m_shaderProgram->setUniform3f("material.ambinet", 1.0, 0.5, 0.31);
+    m_shaderProgram->setUniform3f("material.diffuse", 1.0, 0.5, 0.31);
+    m_shaderProgram->setUniform3f("material.specular", 0.5, 0.5, 0.5);
+    m_shaderProgram->setUniform1f("material.shininess", 32.0);
     
     glBindVertexArray(m_VAO);
     glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
