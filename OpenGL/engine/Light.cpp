@@ -28,6 +28,14 @@ Light::Light()
 , m_VBO(0)
 , m_EBO(0)
 , m_lightType(DIRECTION_LIGHT)
+, m_lightDirction(glm::vec3(0.0, 0.5, -1.0))
+, m_ambinet(glm::vec3(0.2))
+, m_diffuse(glm::vec3(0.5))
+, m_specular(glm::vec3(1.0))
+, m_cutOff(25)
+, m_epsilon(0.1)
+, m_linear(0.007)
+, m_quadratic(0.017)
 {
 }
 
@@ -43,18 +51,8 @@ void Light::init()
 
 void Light::initByType(LightType lightType)
 {
-    m_lightType = lightType;
+    this->setLightType(lightType);
     this->blendBuff();
-}
-
-void Light::setLightColor(glm::vec3 color)
-{
-    m_lightColor = color;
-}
-
-glm::vec3 Light::getLightColor()
-{
-    return m_lightColor;
 }
 
 void Light::blendBuff()
@@ -128,7 +126,8 @@ void Light::draw()
     glm::mat4 view = Director::getInstance()->getMainCamera()->getViewVector();
     
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(m_fPosition.x, m_fPosition.y, m_fPosition.z));
+    glm::vec3 position = getPosition();
+    model = glm::translate(model, glm::vec3(position.x, position.y, position.z));
     model = glm::scale(model, glm::vec3(1.0f, 1.0f, 0.0f));
     //    model = glm::rotate(model, timeValue, glm::vec3(1.0f, 1.0f, 0.0f));
     
@@ -146,4 +145,32 @@ void Light::draw()
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+void Light::setLightType(LightType lightType)
+{
+    m_lightType = lightType;
+    if(lightType == DIRECTION_LIGHT)
+    {
+        m_quadratic = 0;
+        m_linear = 0;
+        m_epsilon = 0;
+        m_cutOff = 0;
+    }
+    else if(lightType == POINT_LIGHT)
+    {
+        m_epsilon = 0;
+        m_cutOff = 0;
+        m_lightDirction = glm::vec3(0);
+    }
+    else if(lightType == SPOT_LIGHT)
+    {
+        m_quadratic = 0;
+        m_linear = 0;
+    }
+}
+
+LightType Light::getLightType()
+{
+    return m_lightType;
 }

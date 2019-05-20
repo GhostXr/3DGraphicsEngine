@@ -14,6 +14,7 @@
 #include <glm/glm.hpp>
 
 #include "Node.h"
+#include "../Config.h"
 
 enum LightType
 {
@@ -36,12 +37,28 @@ public:
     virtual void draw();
     virtual void blendBuff();
     
-    void setLightColor(glm::vec3 color);
+    void setLightType(LightType lightType);
     
-    glm::vec3 getLightColor();
+    LightType getLightType();
     
+    PROPERTY(glm::vec3, m_lightColor, LightColor);
+    
+    PROPERTY(glm::vec3, m_lightDirction, LightDirction);
+    
+    PROPERTY(glm::vec3, m_ambinet, LightAmbinet);
+    
+    PROPERTY(glm::vec3, m_diffuse, LightDiffuse);
+    
+    PROPERTY(glm::vec3, m_specular, LightSpecular);
+    
+    PROPERTY(float, m_cutOff, SpotLightCutOff);
+    
+    PROPERTY(float, m_epsilon, SpotLightEpsilon);
+    
+    PROPERTY(float, m_linear, PointLightLinear);
+    
+    PROPERTY(float, m_quadratic, PointLightQuadratic);
 private:
-    glm::vec3 m_lightColor;
     
     unsigned int m_VAO;
     unsigned int m_VBO;

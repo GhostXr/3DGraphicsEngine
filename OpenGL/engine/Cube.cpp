@@ -11,6 +11,7 @@
 #include <string>
 
 #include "../base/Director.h"
+#include "../Config.h"
 
 using namespace std;
 
@@ -37,11 +38,8 @@ Cube::Cube()
 
 Cube::~Cube()
 {
-    if(m_Texture)
-        delete m_Texture;
-    
-    if(m_specularTexture)
-        delete m_specularTexture;
+    SAFE_FREE(m_Texture);
+    SAFE_FREE(m_specularTexture);
     
     glBindVertexArray(0);
     
@@ -177,7 +175,8 @@ void Cube::draw()
     glm::mat4 view = Director::getInstance()->getMainCamera()->getViewVector();
     
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(m_fPosition.x, m_fPosition.y, m_fPosition.z));
+    glm::vec3 position = getPosition();
+    model = glm::translate(model, glm::vec3(position.x, position.y, position.z));
     //    model = glm::rotate(model, timeValue, glm::vec3(1.0f, 1.0f, 0.0f));
     model = glm::scale(model, glm::vec3(m_scale.x, m_scale.y, m_scale.z));
     
@@ -187,27 +186,62 @@ void Cube::draw()
     
     glm::vec3 lightColor = glm::vec3(1.0);
     glm::vec3 lightPos = glm::vec3(1.0);
+    glm::vec3 lightDirc = glm::vec3(-1.0);
+    glm::vec3 lightAmbinet = glm::vec3(0.0);
+    glm::vec3 lightDifuse = glm::vec3(0.0);
+    glm::vec3 lightSpecular = glm::vec3(0.0);
+    float cutOff = 0;
+    float epsilon = 0;
+    float linear = 0;
+    float quadratic = 0;
+    LightType lightType = DIRECTION_LIGHT;
+    
     Light* light = Director::getInstance()->getLight();
     if(light)
     {
         lightColor = light->getLightColor();
         lightPos = light->getPosition();
+        lightDirc = light->getLightDirction();
+        lightAmbinet = light->getLightAmbinet();
+        lightDifuse = light->getLightDiffuse();
+        lightSpecular = light->getLightSpecular();
+        cutOff = light->getSpotLightCutOff();
+        epsilon = light->getSpotLightEpsilon();
+        linear = light->getPointLightLinear();
+        quadratic = light->getPointLightQuadratic();
+        lightType = light->getLightType();
     }
-    m_shaderProgram->setUniform3f("light.ambinet", 0.2, 0.2, 0.2);
-    m_shaderProgram->setUniform3f("light.diffuse", 0.5, 0.5, 0.5);
-    m_shaderProgram->setUniform3f("light.specular", 1.0, 1.0, 1.0);
-    m_shaderProgram->setUniform3f("light.position", lightPos.x, lightPos.y, lightPos.z);
     
-    //平行光
-    m_shaderProgram->setUniform3f("light.direction", 0.0, 0.0, -1.0);
+    if(lightType == DIRECTION_LIGHT)
+    {
+        m_shaderProgram->setUniform3f("directionLight.ambinet", lightAmbinet.x, lightAmbinet.y, lightAmbinet.z);
+        m_shaderProgram->setUniform3f("directionLight.diffuse", lightDifuse.x, lightDifuse.y, lightDifuse.z);
+        m_shaderProgram->setUniform3f("directionLight.specular", lightSpecular.x, lightSpecular.y, lightSpecular.z);
+        m_shaderProgram->setUniform3f("directionLight.direction", lightDirc.x, lightDirc.y, lightDirc.z);
+    }
     
     //点光源
-//    m_shaderProgram->setUniform1f("light.linear", 0.007);
-//    m_shaderProgram->setUniform1f("light.quadratic", 0.017);
+    if(lightType == POINT_LIGHT)
+    {
+        m_shaderProgram->setUniform3f("pointLight.ambinet", lightAmbinet.x, lightAmbinet.y, lightAmbinet.z);
+        m_shaderProgram->setUniform3f("pointLight.diffuse", lightDifuse.x, lightDifuse.y, lightDifuse.z);
+        m_shaderProgram->setUniform3f("pointLight.specular", lightSpecular.x, lightSpecular.y, lightSpecular.z);
+        m_shaderProgram->setUniform3f("pointLight.position", lightPos.x, lightPos.y, lightPos.z);
+        m_shaderProgram->setUniform1f("pointLight.linear", linear);
+        m_shaderProgram->setUniform1f("pointLight.quadratic", quadratic);
+    }
     
     //切光角
-    m_shaderProgram->setUniform1f("light.cutOff", glm::cos(glm::radians(35.5)));
-    m_shaderProgram->setUniform1f("light.epsilon", 0.1);
+    if(lightType == SPOT_LIGHT)
+    {
+        m_shaderProgram->setUniform3f("spotLight.ambinet", lightAmbinet.x, lightAmbinet.y, lightAmbinet.z);
+        m_shaderProgram->setUniform3f("spotLight.diffuse", lightDifuse.x, lightDifuse.y, lightDifuse.z);
+        m_shaderProgram->setUniform3f("spotLight.specular", lightSpecular.x, lightSpecular.y, lightSpecular.z);
+        m_shaderProgram->setUniform3f("spotLight.position", lightPos.x, lightPos.y, lightPos.z);
+        m_shaderProgram->setUniform3f("spotLight.direction", lightDirc.x, lightDirc.y, lightDirc.z);
+        m_shaderProgram->setUniform1f("spotLight.cutOff", glm::cos(glm::radians(cutOff)));
+        m_shaderProgram->setUniform1f("spotLight.epsilon", epsilon);
+    }
     
     
     glm::vec3 cameraPos = glm::vec3(0);

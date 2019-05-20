@@ -77,7 +77,7 @@ int main(int argc, const char * argv[]) {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     
     GLFWwindow* window = glfwCreateWindow(1000, 1000, "OpenGL", NULL, NULL);
-    if (window == NULL)
+    if (window == nullptr)
     {
 //        cout << "Failed to create GLFW window" << endl;
         glfwTerminate();
@@ -109,7 +109,7 @@ int main(int argc, const char * argv[]) {
     cube1->setShaderProgram(BASIC_LIGHTING_SHADER);
     cube1->setTexture("res/textures/container2.png");
     cube1->setSpecularTexture("res/textures/container2_specular.png");
-    cube1->setPosition(-0, 2, -2);
+    cube1->setPosition(glm::vec3(-0, 2, -2));
 //    cube1->setColor(glm::vec4(0.9, 0.9, 0.9, 1.0));
     cube1->setScale(1.5, 1.5, 1.5);
 
@@ -117,7 +117,7 @@ int main(int argc, const char * argv[]) {
     cube2->setShaderProgram(BASIC_LIGHTING_SHADER);
     cube1->setTexture("res/textures/container2.png");
     cube1->setSpecularTexture("res/textures/container2_specular.png");
-    cube2->setPosition(0, -3.5, -5);
+    cube2->setPosition(glm::vec3(0, -3.5, -5));
 //    cube2->setColor(glm::vec4(0.3, 0.5, 0.2, 1.0));
     rootNode->addChild(cube2);
 

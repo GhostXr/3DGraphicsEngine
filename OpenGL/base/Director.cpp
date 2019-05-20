@@ -8,6 +8,8 @@
 
 #include "Director.h"
 
+#include "../Config.h"
+
 static float deltaTime = 0.0f; // 当前帧与上一帧的时间差
 static float lastFrame = 0.0f; // 上一帧的时间
 
@@ -34,20 +36,19 @@ Director::Director()
 
     lastFrame = glfwGetTime();
     
-    m_light = Light::create(POINT_LIGHT);
+    m_light = Light::create(SPOT_LIGHT);
     m_light->setShaderProgram(LIGHT_SHADER);
     m_light->setLightColor(glm::vec3(1.0, 1.0, 1.0));
     m_light->setColor(glm::vec4(1.0, 1.0, 1.0, 1.0));
-    m_light->setPosition(0, 2, 0);
+    m_light->setPosition(glm::vec3(0.0, 2.0, 1.0));
     m_rootNode->addChild(m_light);
 }
 
 Director::~Director()
 {
-    delete m_rootNode;
-    delete m_light;
-    if(m_mainCamera)
-        delete m_mainCamera;
+    SAFE_DELETE(m_rootNode);
+    SAFE_DELETE(m_light);
+    SAFE_DELETE(m_mainCamera);
 }
 
 Node* Director::getRootNode()

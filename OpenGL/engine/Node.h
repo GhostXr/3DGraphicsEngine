@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "GLShaderProgram.h"
+#include "../Config.h"
 
 #include <GLFW/glfw3.h>
 
@@ -42,14 +43,12 @@ public:
     
     void removeParentNode();
     
-    void setPosition(float x, float y, float z);
-    
-    glm::vec3 getPosition();
-    
     void setColor(glm::vec4 color);
     
     void setScale(const float x, const float y, const float z);
-
+    
+    PROPERTY(glm::vec3, m_fPosition, Position);
+    
 public:
     bool m_hasAlpha;
     
@@ -58,8 +57,6 @@ public:
     vector<Node*> m_vChildrenList;
     
     Node* m_nParentNode;
-    
-    glm::vec3 m_fPosition;
     
     glm::vec4 m_color;
     

@@ -43,6 +43,7 @@
 		5B383B15215898F600BC5325 /* GLShaderProgram.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GLShaderProgram.cpp; sourceTree = "<group>"; };
 		5B383B16215898F600BC5325 /* GLShaderProgram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLShaderProgram.h; sourceTree = "<group>"; };
 		5B383B1821590E1E00BC5325 /* PositionShader_frag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PositionShader_frag.h; path = OpenGL/shaders/PositionShader_frag.h; sourceTree = SOURCE_ROOT; };
+		5B6B1248229290F20030D75B /* Config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		5B6D9777217C1F3500F2A8D4 /* test.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test.cpp; sourceTree = "<group>"; };
 		5B7831DE214E966C00B84F4E /* PositionShader_vert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PositionShader_vert.h; sourceTree = "<group>"; };
 		5B9B2A8521686A06005C62F2 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
@@ -148,6 +149,7 @@
 				5B7831DD214E961100B84F4E /* shaders */,
 				5BAEA439213696CD0055552D /* main.cpp */,
 				5B6D9777217C1F3500F2A8D4 /* test.cpp */,
+				5B6B1248229290F20030D75B /* Config.h */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
