@@ -49,7 +49,7 @@ public:
     void setColor(glm::vec4 color);
     
     void setScale(const float x, const float y, const float z);
-    
+
 public:
     bool m_hasAlpha;
     

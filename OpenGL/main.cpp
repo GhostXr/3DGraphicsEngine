@@ -107,17 +107,19 @@ int main(int argc, const char * argv[]) {
     Cube* cube1 = Cube::create();
     rootNode->addChild(cube1);
     cube1->setShaderProgram(BASIC_LIGHTING_SHADER);
-    cube1->setTexture("res/textures/wall.jpg");
-    cube1->setPosition(0, 0, -0);
-    cube1->setColor(glm::vec4(0.9, 0.9, 0.9, 1.0));
+    cube1->setTexture("res/textures/container2.png");
+    cube1->setSpecularTexture("res/textures/container2_specular.png");
+    cube1->setPosition(-0, 2, -2);
+//    cube1->setColor(glm::vec4(0.9, 0.9, 0.9, 1.0));
     cube1->setScale(1.5, 1.5, 1.5);
 
-//    Cube* cube2 = Cube::create();
-//    cube2->setShaderProgram(BASIC_LIGHTING_SHADER);
-////    cube2->setTexture("res/textures/wall.jpg");
-//    cube2->setPosition(0, -4, -5);
+    Cube* cube2 = Cube::create();
+    cube2->setShaderProgram(BASIC_LIGHTING_SHADER);
+    cube1->setTexture("res/textures/container2.png");
+    cube1->setSpecularTexture("res/textures/container2_specular.png");
+    cube2->setPosition(0, -3.5, -5);
 //    cube2->setColor(glm::vec4(0.3, 0.5, 0.2, 1.0));
-//    rootNode->addChild(cube2);
+    rootNode->addChild(cube2);
 
     mainLoop(window);
     

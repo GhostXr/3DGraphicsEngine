@@ -28,9 +28,13 @@ public:
     
     void setTexture(const char* fileName);
     
+    void setSpecularTexture(const char* fileName);
+    
     virtual void blendBuff();
     
     Texture* m_Texture;
+    
+    Texture* m_specularTexture;
     
     unsigned int m_VAO;
     unsigned int m_VBO;

@@ -34,11 +34,11 @@ Director::Director()
 
     lastFrame = glfwGetTime();
     
-    m_light = Light::create();
+    m_light = Light::create(POINT_LIGHT);
     m_light->setShaderProgram(LIGHT_SHADER);
-    m_light->setLightColor(glm::vec3(0.3, 0.8, 0.1));
-    m_light->setColor(glm::vec4(0.3, 0.8, 0.1, 1.0));
-    m_light->setPosition(0, 2, 3);
+    m_light->setLightColor(glm::vec3(1.0, 1.0, 1.0));
+    m_light->setColor(glm::vec4(1.0, 1.0, 1.0, 1.0));
+    m_light->setPosition(0, 2, 0);
     m_rootNode->addChild(m_light);
 }
 

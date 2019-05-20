@@ -15,15 +15,23 @@
 
 #include "Node.h"
 
+enum LightType
+{
+    DIRECTION_LIGHT,
+    POINT_LIGHT,
+    SPOT_LIGHT
+};
+
 class Light : public Node
 {
 public:
-    static Light* create();
+    static Light* create(LightType lightType);
     
     Light();
     ~Light();
     
     virtual void init();
+    void initByType(LightType lightType);
     virtual void visit();
     virtual void draw();
     virtual void blendBuff();
@@ -38,6 +46,8 @@ private:
     unsigned int m_VAO;
     unsigned int m_VBO;
     unsigned int m_EBO;
+    
+    LightType m_lightType;
 };
 
 #endif /* Light_h */

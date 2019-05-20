@@ -9,12 +9,15 @@
 #include "Light.hpp"
 #include "../base/Director.h"
 
-Light* Light::create()
+Light* Light::create(LightType lightType)
 {
     Light* light = new Light();
     if(light)
     {
-        light->init();
+        if(lightType)
+            light->initByType(lightType);
+        else
+            light->init();
     }
     return light;
 }
@@ -24,6 +27,7 @@ Light::Light()
 , m_VAO(0)
 , m_VBO(0)
 , m_EBO(0)
+, m_lightType(DIRECTION_LIGHT)
 {
 }
 
@@ -33,6 +37,13 @@ Light::~Light()
 
 void Light::init()
 {
+    
+    this->blendBuff();
+}
+
+void Light::initByType(LightType lightType)
+{
+    m_lightType = lightType;
     this->blendBuff();
 }
 
