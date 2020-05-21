@@ -1,8 +1,6 @@
 name: Blog
 
-on:
-  push:
-    branches: [ master ]
+on: [push]
 
 jobs:
   deploy:
@@ -21,4 +19,4 @@ jobs:
         secretKey: ${{ secrets.SECRET_KEY }}
         
         envId: ${{ secrets.ENV_ID }}
-        staticSrcPath: build
+        staticSrcPath: OpenGL
