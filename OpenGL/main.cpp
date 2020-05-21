@@ -68,6 +68,7 @@ void setOpenGLView()
 {
 }
 
+//test
 int main(int argc, const char * argv[]) {
     
     glfwInit();
